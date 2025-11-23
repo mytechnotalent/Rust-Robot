@@ -24,10 +24,10 @@ Async robot firmware for Waveshare Pico2Go (RP2350-Plus) in Embedded Rust with E
 
 ```bash
 # Put your RP2350 in BOOTSEL mode (hold button while plugging USB)
-./quick-flash.sh
+cargo run --release
 ```
 
-That's it! The script will build and flash automatically.
+That's it! Cargo will build and flash automatically.
 
 ## What's Included
 
@@ -61,46 +61,34 @@ cargo build --release
 
 ### Method 1: BOOTSEL Mode (Recommended)
 
-Use the included flash script for devices in BOOTSEL mode:
+The project is configured to automatically flash via BOOTSEL mode:
 
 ```bash
 # 1. Hold BOOTSEL button on RP2350 and plug in USB
-# 2. Run the flash script
-./quick-flash.sh
+# 2. Run cargo
+cargo run --release
 ```
 
-The script will:
+The build process will:
 - Build the release binary
-- Convert ELF to UF2 format
-- Flash using picotool (or copy to mounted volume)
-- Auto-reset the device
+- Convert ELF to UF2 using picotool
+- Auto-detect the mounted RP2350 drive
+- Copy the UF2 and auto-reset the device
 
-### Method 2: Manual UF2 Copy
+**Requirements:**
+- `picotool` must be installed: `brew install picotool`
 
-```bash
-cargo build --release
+### Method 2: Debug Probe (probe-rs)
 
-# Install elf2uf2-rs if not already installed
-cargo install elf2uf2-rs --locked
+If you have a debug probe connected, update `.cargo/config.toml` to use probe-rs:
 
-# Convert to UF2
-elf2uf2-rs target/thumbv8m.main-none-eabihf/release/robot-embassy \
-           target/thumbv8m.main-none-eabihf/release/robot-embassy.uf2
-
-# Copy to mounted RP2350 volume
-cp target/thumbv8m.main-none-eabihf/release/robot-embassy.uf2 /Volumes/RP2350/
+```toml
+[target.thumbv8m.main-none-eabihf]
+runner = "probe-rs run --chip RP2350"
 ```
 
-### Method 3: Debug Probe (probe-rs)
-
-If you have a debug probe connected:
-
+Then:
 ```bash
-# Install probe-rs
-cargo install probe-rs-tools --locked
-
-# Uncomment the runner line in .cargo/config.toml
-# Then run:
 cargo run --release
 ```
 

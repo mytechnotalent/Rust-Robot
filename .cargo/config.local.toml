@@ -1,0 +1,10 @@
+# Local cargo configuration override
+# Uncomment one of the runners below based on your flashing method
+
+# Option 1: Use probe-rs (requires debug probe connected)
+# This is already configured in config.toml
+
+# Option 2: Manual UF2 flashing (for BOOTSEL mode)
+# Uncomment the lines below to disable automatic flashing
+# [target.thumbv8m.main-none-eabihf]
+# runner = "echo 'Binary built. Use picotool or copy UF2 to device manually.'"

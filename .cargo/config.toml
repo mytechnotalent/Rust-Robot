@@ -3,9 +3,17 @@
 target = "thumbv8m.main-none-eabihf"
 
 [target.thumbv8m.main-none-eabihf]
-runner = "probe-rs run --chip RP2350"
+# Using custom UF2 flashing script for BOOTSEL mode
+runner = "./flash-uf2.sh"
 rustflags = [
   "-C", "link-arg=--nmagic",
   "-C", "link-arg=-Tlink.x",
   "-C", "link-arg=-Tdefmt.x",
 ]
+
+# Cargo aliases for convenience
+[alias]
+# Build and flash via debug probe (requires probe-rs and debug probe connected)
+flash = "run --release"
+# Just build without flashing
+build-only = "build --release"
