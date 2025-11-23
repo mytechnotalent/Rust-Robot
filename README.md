@@ -20,7 +20,6 @@ Async robot firmware for Waveshare Pico2Go (RP2350-Plus) in Embedded Rust with E
     - 3.7V, 2500mAh high capacity, suitable for powering the Pico2Go robot and similar embedded projects.  
     - Rechargeable, long life, and includes charger for convenience.
 
-
 ## 🚀 Quick Start
 
 ```bash
@@ -33,7 +32,7 @@ That's it! The script will build and flash automatically.
 ## What's Included
 
 - **Motor Control**: PWM-based speed control with direction pins
-- **NEC IR Protocol Decoder**: Async IR remote receiver 
+- **NEC IR Protocol Decoder**: Async IR remote receiver
 - **Embassy Async Runtime**: Clean async/await implementation for RP2350
 
 ## Hardware Pin Mapping
@@ -51,7 +50,7 @@ That's it! The script will build and flash automatically.
 This project uses Embassy from git (main branch) since RP2350 support is very recent.
 
 ```bash
-# Install the ARM Cortex-M33 target (already done if you followed setup)
+# Install the ARM Cortex-M33 target (if not already installed)
 rustup target add thumbv8m.main-none-eabihf
 
 # Build
@@ -107,7 +106,7 @@ cargo run --release
 
 ## Dependencies Note
 
-The `Cargo.toml` uses git dependencies for Embassy crates to get the latest RP2350 support.  
+The `Cargo.toml` uses git dependencies for Embassy crates to get the latest RP2350 support.
 Once RP2350 support is published to crates.io, you can switch to versioned dependencies.
 
 ## Key Differences from C Version
@@ -120,7 +119,7 @@ Once RP2350 support is published to crates.io, you can switch to versioned depen
 ## IR Remote Commands
 
 - `0x18`: Forward
-- `0x08`: Left  
+- `0x08`: Left
 - `0x1C`: Stop
 - `0x5A`: Right
 - `0x52`: Backward

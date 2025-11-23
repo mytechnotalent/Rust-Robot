@@ -1,6 +1,11 @@
 #!/bin/bash
+
 # Quick flash script for RP2350
 
+# Exit on error
+set -e
+
+# Print header
 echo "🚀 Quick Flash for RP2350"
 echo ""
 
@@ -8,6 +13,7 @@ echo ""
 echo "1️⃣  Building release binary..."
 cargo build --release || exit 1
 
+# Define paths
 PICOTOOL="$HOME/.pico-sdk/picotool/2.2.0/picotool/picotool"
 BINARY="target/thumbv8m.main-none-eabihf/release/robot-embassy"
 UF2="target/thumbv8m.main-none-eabihf/release/robot-embassy.uf2"
@@ -27,6 +33,7 @@ if [ -f "$PICOTOOL" ]; then
     echo "2️⃣  Creating UF2 with picotool..."
     "$PICOTOOL" uf2 convert "$BINARY" "$UF2" --family rp2350-arm-s
     
+	# Look for RP2350 drive
     echo "3️⃣  Looking for RP2350 drive..."
     # Try common mount points
     for vol in "/Volumes/RP2350" "/Volumes/RPI-RP2"; do
@@ -39,6 +46,7 @@ if [ -f "$PICOTOOL" ]; then
         fi
     done
     
+	# No drive found
     echo ""
     echo "⚠️  Created UF2: $UF2"
     echo "   Manually copy it to your RP2350 drive"
